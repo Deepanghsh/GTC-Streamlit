@@ -1,6 +1,7 @@
 import streamlit as st
 import os
 import subprocess
+import sys
 
 st.set_page_config(
     page_title="Graph Theory and Combinatorics",
@@ -63,7 +64,7 @@ for exp in sorted(os.listdir(".")):
                         try:
 
                             result = subprocess.run(
-                                ["python", path],
+                                [sys.executable, path],
                                 capture_output=True,
                                 text=True,
                                 encoding="utf-8"
@@ -76,7 +77,10 @@ for exp in sorted(os.listdir(".")):
 
                             st.session_state[f"stderr_{path}"] = str(e)
 
-                if f"stdout_{path}" in st.session_state or f"stderr_{path}" in st.session_state:
+                if (
+                    f"stdout_{path}" in st.session_state
+                    or f"stderr_{path}" in st.session_state
+                ):
 
                     with st.container():
 
