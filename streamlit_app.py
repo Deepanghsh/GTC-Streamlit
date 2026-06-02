@@ -69,20 +69,22 @@ html, body, [class*="css"] {
 }
 .exp-badge {
     font-family: 'JetBrains Mono', monospace;
-    font-size: 0.65rem; font-weight: 500;
-    background: rgba(255,255,255,0.1); color: #888;
+    font-size: 0.65rem; font-weight: 600;
+    background: rgba(255,255,255,0.15); color: #e0dbd4;
     padding: 3px 10px; border-radius: 3px;
     white-space: nowrap; letter-spacing: 0.12em; text-transform: uppercase;
-    border: 1px solid rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.22);
 }
 .exp-title {
     font-family: 'Source Serif 4', serif;
-    font-size: 1.08rem; font-weight: 600; color: #f5f2ee;
+    font-size: 1.08rem; font-weight: 600; color: #ffffff;
 }
 .exp-date {
     margin-left: auto;
     font-family: 'JetBrains Mono', monospace;
-    font-size: 0.72rem; color: #666; white-space: nowrap;
+    font-size: 0.65rem; font-weight: 600;
+    color: #e0dbd4; white-space: nowrap;
+    letter-spacing: 0.1em; text-transform: uppercase;
 }
 .aim-section {
     padding: 1.1rem 1.6rem 1rem;
@@ -307,7 +309,7 @@ for meta in EXPERIMENTS:
     <div class="exp-titlebar">
         <span class="exp-badge">Experiment {num:02d}</span>
         <span class="exp-title">{meta['name']}</span>
-        <span class="exp-date">&#128197; {meta['date']}</span>
+        <span class="exp-date">DATE &nbsp;: &nbsp;{meta['date']}</span>
     </div>
     <div class="aim-section">
         <div class="section-label">Aim</div>
