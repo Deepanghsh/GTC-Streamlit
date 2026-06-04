@@ -49,11 +49,14 @@ html, body, [class*="css"] {
     top: 0;
     left: 0;
     right: 0;
-    z-index: 999;
+    z-index: 99999;
+    /* Let clicks pass through to the Streamlit >> toggle button beneath */
+    pointer-events: none;
 }
-/* Always keep Streamlit's sidebar toggle (>> / <<) above the fixed header */
-[data-testid="collapsedControl"] {
-    z-index: 1000 !important;
+.college-header img,
+.college-header .ch-divider,
+.college-header .ch-text {
+    pointer-events: auto;
 }
 .college-header .ch-logo {
     flex-shrink: 0;
