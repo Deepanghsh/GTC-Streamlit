@@ -24,9 +24,12 @@ html, body, [class*="css"] {
     background-color: #f0ede8;
     color: #1a1a1a;
 }
+[data-testid="stHeader"] {
+    display: none;
+}
 .main .block-container {
     max-width: 1020px;
-    padding-top: 5.5rem;
+    padding-top: 1.5rem;
     padding-bottom: 3rem;
     background-color: #f0ede8;
 }
@@ -36,14 +39,14 @@ html, body, [class*="css"] {
     justify-content: center;
     gap: 1rem;
     padding: 0.55rem 1.6rem;
-    border-bottom: 1px solid #c8c2b8;
+    border: 1px solid #c8c2b8;
     border-top: 3px solid #1a1a1a;
+    margin-bottom: 1.8rem;
     background: #faf8f5;
+    border-radius: 2px;
     box-shadow: 0 2px 8px rgba(0,0,0,0.07);
-    position: fixed;
+    position: sticky;
     top: 0;
-    left: 0;
-    right: 0;
     z-index: 999;
 }
 .college-header .ch-logo {
