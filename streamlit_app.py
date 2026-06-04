@@ -54,7 +54,6 @@ html, body, [class*="css"] {
 /* Always keep Streamlit's sidebar toggle (>> / <<) above the fixed header */
 [data-testid="collapsedControl"] {
     z-index: 1000 !important;
-    position: relative !important;
 }
 .college-header .ch-logo {
     flex-shrink: 0;
