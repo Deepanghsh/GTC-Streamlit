@@ -26,7 +26,7 @@ html, body, [class*="css"] {
 }
 .main .block-container {
     max-width: 1020px;
-    padding-top: 0;
+    padding-top: 5.5rem;
     padding-bottom: 3rem;
     background-color: #f0ede8;
 }
@@ -34,51 +34,43 @@ html, body, [class*="css"] {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 1.4rem;
-    padding: 1rem 2rem;
-    border: 1px solid #c8c2b8;
-    border-top: 4px solid #1a1a1a;
-    margin-bottom: 1.8rem;
+    gap: 1rem;
+    padding: 0.55rem 1.6rem;
+    border-bottom: 1px solid #c8c2b8;
+    border-top: 3px solid #1a1a1a;
     background: #faf8f5;
-    border-radius: 2px;
     box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 999;
 }
 .college-header .ch-logo {
     flex-shrink: 0;
-    width: 72px;
-    height: 72px;
+    width: 46px;
+    height: 46px;
     object-fit: contain;
     border-radius: 2px;
 }
 .college-header .ch-divider {
     width: 1px;
-    height: 56px;
+    height: 36px;
     background: #d5cfc6;
     flex-shrink: 0;
 }
 .college-header .ch-text {
     text-align: left;
 }
-.college-header .ch-institution {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.6rem; font-weight: 600; letter-spacing: 0.2em;
-    text-transform: uppercase; color: #aaa;
-    margin-bottom: 0.25rem;
-}
 .college-header .ch-name {
     font-family: 'Source Serif 4', serif;
-    font-size: 1.18rem; font-weight: 600; color: #1a1a1a;
+    font-size: 1.08rem; font-weight: 600; color: #1a1a1a;
     line-height: 1.2;
+    margin-bottom: 0.1rem;
 }
-.college-header .ch-course {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.68rem; color: #666;
-    margin-top: 0.3rem; letter-spacing: 0.04em;
-}
-.college-header .ch-meta {
-    font-size: 0.72rem; color: #999; margin-top: 0.2rem;
+.college-header .ch-dept {
     font-family: 'DM Sans', sans-serif;
-    letter-spacing: 0.01em;
+    font-size: 0.75rem; color: #666;
 }
 .exp-card {
     border: 1px solid #c8c2b8;
@@ -566,10 +558,8 @@ st.markdown(f"""
     {f'<img class="ch-logo" src="data:image/jpeg;base64,{_logo_b64}" alt="GEC Logo">' if _logo_b64 else ''}
     {'<div class="ch-divider"></div>' if _logo_b64 else ''}
     <div class="ch-text">
-        <div class="ch-institution">Goa College of Engineering &nbsp;·&nbsp; Farmagudi, Ponda – Goa</div>
         <div class="ch-name">Graph Theory and Combinatorics Lab</div>
-        <div class="ch-course">CMP-226 &nbsp;/&nbsp; Semester IV &nbsp;·&nbsp; B.E. Computer Engineering</div>
-        <div class="ch-meta">Deepanghsh Dilkush Naik &nbsp;·&nbsp; Roll No. 24B-CO-017</div>
+        <div class="ch-dept">Department of Computer Engineering &nbsp;·&nbsp; Goa College of Engineering</div>
     </div>
 </div>
 """, unsafe_allow_html=True)
@@ -747,11 +737,9 @@ for meta in show_experiments:
 
 st.markdown("""
 <div class="gtc-footer">
-    <span>Deepanghsh Dilkush Naik</span>
+    <span>CMP-226</span>
     &nbsp;·&nbsp;
-    <span>24B-CO-017</span>
-    &nbsp;·&nbsp;
-    <span>B.E. Computer Engineering &nbsp;·&nbsp; Semester IV</span>
+    <span>Graph Theory and Combinatorics Lab</span>
     &nbsp;·&nbsp;
     <span>Goa College of Engineering</span>
 </div>
