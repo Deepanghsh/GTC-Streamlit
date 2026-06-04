@@ -58,6 +58,11 @@ html, body, [class*="css"] {
 .college-header .ch-text {
     pointer-events: auto;
 }
+/* Keep the >> sidebar expand button always visible & clickable above the fixed header.
+   Only z-index is changed — position is left untouched so the sidebar isn't broken. */
+[data-testid="collapsedControl"] {
+    z-index: 999999 !important;
+}
 .college-header .ch-logo {
     flex-shrink: 0;
     width: 46px;
