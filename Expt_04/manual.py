@@ -40,5 +40,7 @@ def havel_hakimi_final(degree_sequence):
     plt.savefig("graph.png")
 plt.close()
 
-seq = [2, 2, 2, 2, 2, 2, 2, 2]
+raw = input("Enter degree sequence (space-separated integers): ")
+seq = list(map(int, raw.split()))
+print(f"Input sequence: {seq}")
 havel_hakimi_final(seq)

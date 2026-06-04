@@ -5,9 +5,6 @@ import sys
 import glob
 import shutil
 import tempfile
-import base64
-import ast
-import re
 
 st.set_page_config(
     page_title="CMP-226 Graph Theory and Combinatorics Lab",
@@ -31,54 +28,21 @@ html, body, [class*="css"] {
     background-color: #f0ede8;
 }
 .college-header {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 1.4rem;
-    padding: 1rem 2rem;
+    text-align: center;
+    padding: 0.75rem 1.5rem;
     border: 1px solid #c8c2b8;
-    border-top: 4px solid #1a1a1a;
-    margin-bottom: 1.8rem;
+    border-top: 3px solid #1a1a1a;
+    margin-bottom: 1.5rem;
     background: #faf8f5;
     border-radius: 2px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.07);
-}
-.college-header .ch-logo {
-    flex-shrink: 0;
-    width: 72px;
-    height: 72px;
-    object-fit: contain;
-    border-radius: 2px;
-}
-.college-header .ch-divider {
-    width: 1px;
-    height: 56px;
-    background: #d5cfc6;
-    flex-shrink: 0;
-}
-.college-header .ch-text {
-    text-align: left;
-}
-.college-header .ch-institution {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.6rem; font-weight: 600; letter-spacing: 0.2em;
-    text-transform: uppercase; color: #aaa;
-    margin-bottom: 0.25rem;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.06);
 }
 .college-header .ch-name {
     font-family: 'Source Serif 4', serif;
-    font-size: 1.18rem; font-weight: 600; color: #1a1a1a;
-    line-height: 1.2;
-}
-.college-header .ch-course {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.68rem; color: #666;
-    margin-top: 0.3rem; letter-spacing: 0.04em;
+    font-size: 1.1rem; font-weight: 600; color: #1a1a1a;
 }
 .college-header .ch-meta {
-    font-size: 0.72rem; color: #999; margin-top: 0.2rem;
-    font-family: 'DM Sans', sans-serif;
-    letter-spacing: 0.01em;
+    font-size: 0.76rem; color: #888; margin-top: 0.1rem;
 }
 .exp-card {
     border: 1px solid #c8c2b8;
@@ -154,94 +118,13 @@ html, body, [class*="css"] {
 }
 .gtc-footer {
     position: fixed;
-    bottom: 0; left: 0; right: 0;
+    bottom: 0; left: 21rem; right: 0;
     z-index: 999;
     text-align: center;
     padding: 0.55rem 1.5rem;
     background: #1a1a1a;
     font-family: 'JetBrains Mono', monospace;
-    font-size: 0.72rem; color: #c8c2b8; letter-spacing: 0.08em;
-    display: flex; align-items: center; justify-content: center; gap: 1.5rem;
-}
-.gtc-footer span { opacity: 0.45; }
-
-/* ── Per-experiment tab navbar ───────────────────────── */
-.exp-card .stTabs [data-baseweb="tab-list"] {
-    background: #242424;
-    border-radius: 0;
-    gap: 0;
-    padding: 0 1.2rem;
-    border-bottom: 2px solid #3a3a3a;
-}
-.exp-card .stTabs [data-baseweb="tab"] {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.67rem;
-    font-weight: 600;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: #aaa;
-    padding: 0.65rem 1.2rem;
-    border-radius: 0;
-    background: transparent;
-    border: none;
-    border-bottom: 2px solid transparent;
-    margin-bottom: -2px;
-    transition: color 0.18s, border-color 0.18s;
-}
-.exp-card .stTabs [aria-selected="true"] {
-    color: #ffffff !important;
-    border-bottom: 2px solid #ffffff !important;
-    background: transparent !important;
-}
-.exp-card .stTabs [data-baseweb="tab"]:hover {
-    color: #ddd;
-    border-bottom-color: #666;
-}
-.exp-card .stTabs [data-baseweb="tab-panel"] {
-    padding: 1.2rem 1.6rem 1.4rem;
-    background: #faf8f5;
-}
-.exp-card .stTabs [data-baseweb="tab-highlight"] {
-    display: none;
-}
-/* wrap the tab area inside the card dark header */
-.exp-tab-wrapper {
-    border: 1px solid #c8c2b8;
-    border-radius: 3px;
-    margin-bottom: 3.5rem;
-    overflow: hidden;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.07);
-}
-/* Run panel */
-.run-panel {
-    background: #f0ede8;
-    border: 1px solid #d5cfc6;
-    border-radius: 4px;
-    padding: 1rem 1.2rem;
-    margin-bottom: 1.2rem;
-}
-.run-panel-label {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.62rem; font-weight: 500; letter-spacing: 0.18em;
-    text-transform: uppercase; color: #999;
-    margin-bottom: 0.5rem;
-}
-/* Style the run button */
-div[data-testid="stButton"] > button[kind="primary"] {
-    background: #1a1a1a !important;
-    color: #ffffff !important;
-    border: none !important;
-    border-radius: 3px !important;
-    font-family: 'JetBrains Mono', monospace !important;
-    font-size: 0.72rem !important;
-    font-weight: 600 !important;
-    letter-spacing: 0.12em !important;
-    text-transform: uppercase !important;
-    padding: 0.5rem 1.4rem !important;
-    transition: background 0.18s !important;
-}
-div[data-testid="stButton"] > button[kind="primary"]:hover {
-    background: #333 !important;
+    font-size: 0.78rem; color: #c8c2b8; letter-spacing: 0.06em;
 }
 </style>
 """, unsafe_allow_html=True)
@@ -512,7 +395,7 @@ plt.savefig = _patched_savefig
 """
 
 
-def run_script(path, stdin_input=""):
+def run_script(path):
     script_dir = os.path.dirname(os.path.abspath(path))
     script_name = os.path.splitext(os.path.basename(path))[0]
     tmp_dir = tempfile.mkdtemp()
@@ -527,7 +410,6 @@ def run_script(path, stdin_input=""):
         env["MPLBACKEND"] = "Agg"
         result = subprocess.run(
             [sys.executable, patched_path],
-            input=stdin_input if stdin_input else None,
             capture_output=True, text=True,
             encoding="utf-8", errors="replace",
             cwd=script_dir, env=env, timeout=60,
@@ -545,6 +427,20 @@ def run_script(path, stdin_input=""):
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
+for meta in EXPERIMENTS:
+    ck = f"ran_{meta['key']}"
+    if ck not in st.session_state:
+        exp_dir = os.path.join(BASE_DIR, meta["key"])
+        py_files = sorted(glob.glob(os.path.join(exp_dir, "*.py"))) if os.path.isdir(exp_dir) else []
+        results = []
+        for path in py_files:
+            try:
+                stdout, stderr, imgs = run_script(path)
+            except Exception as e:
+                stdout, stderr, imgs = "", str(e), []
+            results.append({"file": os.path.basename(path), "stdout": stdout, "stderr": stderr, "imgs": imgs})
+        st.session_state[ck] = results
+
 with st.sidebar:
     if "selected_exp" not in st.session_state:
         st.session_state.selected_exp = "all"
@@ -555,22 +451,10 @@ with st.sidebar:
         if st.button(f"{meta['num']:02d} · {meta['name']}", use_container_width=True, key=f"nav_{meta['key']}"):
             st.session_state.selected_exp = meta["key"]
 
-_logo_path = os.path.join(BASE_DIR, "WhatsApp Image 2026-06-04 at 12.22.52 PM.jpeg")
-_logo_b64 = ""
-if os.path.exists(_logo_path):
-    with open(_logo_path, "rb") as _f:
-        _logo_b64 = base64.b64encode(_f.read()).decode()
-
-st.markdown(f"""
+st.markdown("""
 <div class="college-header">
-    {f'<img class="ch-logo" src="data:image/jpeg;base64,{_logo_b64}" alt="GEC Logo">' if _logo_b64 else ''}
-    {'<div class="ch-divider"></div>' if _logo_b64 else ''}
-    <div class="ch-text">
-        <div class="ch-institution">Goa College of Engineering &nbsp;·&nbsp; Farmagudi, Ponda – Goa</div>
-        <div class="ch-name">Graph Theory and Combinatorics Lab</div>
-        <div class="ch-course">CMP-226 &nbsp;/&nbsp; Semester IV &nbsp;·&nbsp; B.E. Computer Engineering</div>
-        <div class="ch-meta">Deepanghsh Dilkush Naik &nbsp;·&nbsp; Roll No. 24B-CO-017</div>
-    </div>
+    <div class="ch-name">Goa College of Engineering</div>
+    <div class="ch-meta">CMP-226 &nbsp;·&nbsp; Graph Theory and Combinatorics Lab &nbsp;|&nbsp; Deepanghsh Dilkush Naik &nbsp;·&nbsp; 24B-CO-017 &nbsp;·&nbsp; Semester 4</div>
 </div>
 """, unsafe_allow_html=True)
 
@@ -582,177 +466,58 @@ for meta in show_experiments:
     results = st.session_state.get(f"ran_{meta['key']}", [])
 
     st.markdown(f"""
-<div class="exp-tab-wrapper">
+<div class="exp-card">
     <div class="exp-titlebar">
         <span class="exp-badge">Experiment {meta['num']:02d}</span>
         <span class="exp-title">{meta['name']}</span>
         <span class="exp-date">DATE &nbsp;: &nbsp;{meta['date']}</span>
     </div>
+    <div class="aim-section">
+        <div class="section-label">Aim</div>
+        <p class="section-text">{meta['aim']}</p>
+    </div>
+    <div class="theory-section">
+        <div class="section-label">Theory</div>
+        <p class="section-text">{meta['theory'].replace(chr(10), '<br>')}</p>
+    </div>
 </div>
 """, unsafe_allow_html=True)
 
-    py_files = sorted(glob.glob(os.path.join(exp_dir, "*.py"))) if os.path.isdir(exp_dir) else []
-    has_code = bool(py_files)
+    if os.path.isdir(exp_dir):
+        py_files = sorted(glob.glob(os.path.join(exp_dir, "*.py")))
+        for i, path in enumerate(py_files):
+            fname = os.path.basename(path)
+            st.markdown(f"<div class='file-label'>&#128196; Code — {fname}</div>", unsafe_allow_html=True)
+            try:
+                with open(path, "r", encoding="utf-8") as f:
+                    st.code(f.read(), language="python")
+            except Exception as e:
+                st.error(str(e))
+            if i < len(results):
+                r = results[i]
+                st.markdown(f"<div class='output-label'>&#9654; Output — {fname}</div>", unsafe_allow_html=True)
+                if r["stdout"]:
+                    st.code(r["stdout"], language="")
+                for img_path in r["imgs"]:
+                    if os.path.exists(img_path):
+                        col1, col2, col3 = st.columns([1, 5, 1])
+                        with col2:
+                            st.image(img_path, use_container_width=True)
+                if r["stderr"] and not r["stdout"] and not r["imgs"]:
+                    st.error(r["stderr"])
+    else:
+        st.warning(f"Folder `{meta['key']}` not found.")
 
-    tab_labels = ["📌 Aim", "📖 Theory", "💻 Code", "📊 Output", "✅ Conclusion"]
-    tabs = st.tabs(tab_labels)
-
-    with tabs[0]:
-        st.markdown(f"""
-        <div class="section-label" style="margin-top:0.3rem;">Aim</div>
-        <p class="section-text">{meta['aim']}</p>
-        """, unsafe_allow_html=True)
-
-    with tabs[1]:
-        st.markdown(f"""
-        <div class="section-label" style="margin-top:0.3rem;">Theory</div>
-        <p class="section-text">{meta['theory'].replace(chr(10), '<br>')}</p>
-        """, unsafe_allow_html=True)
-
-    with tabs[2]:
-        if has_code:
-            for path in py_files:
-                fname = os.path.basename(path)
-                st.markdown(f"<div class='file-label' style='padding-left:0;border-top:none;'>&#128196; {fname}</div>", unsafe_allow_html=True)
-                try:
-                    with open(path, "r", encoding="utf-8") as f:
-                        st.code(f.read(), language="python")
-                except Exception as e:
-                    st.error(str(e))
-        else:
-            st.warning(f"No Python files found in `{meta['key']}/`.")
-
-    with tabs[3]:
-        ck = f"ran_{meta['key']}"
-        results = st.session_state.get(ck, [])
-
-        if has_code:
-            # ── Collect all input() prompts across every file in this experiment
-            all_prompts = []   # list of (file_index, prompt_index, prompt_str, widget_key)
-            for fi, path in enumerate(py_files):
-                try:
-                    src = open(path, "r", encoding="utf-8", errors="replace").read()
-                    tree = ast.parse(src)
-                    pi = 0
-                    for node in ast.walk(tree):
-                        if isinstance(node, ast.Call):
-                            fn = node.func
-                            is_input = (
-                                (isinstance(fn, ast.Name) and fn.id == "input") or
-                                (isinstance(fn, ast.Attribute) and fn.attr == "input")
-                            )
-                            if is_input:
-                                if node.args and isinstance(node.args[0], ast.Constant):
-                                    prompt_txt = str(node.args[0].value)
-                                else:
-                                    prompt_txt = f"Value {pi + 1}"
-                                wk = f"inp_{meta['key']}_f{fi}_p{pi}"
-                                all_prompts.append((fi, pi, prompt_txt, wk))
-                                pi += 1
-                except Exception:
-                    pass
-
-            # ── Input fields — one per input() call ─────────────────
-            if all_prompts:
-                st.markdown(
-                    "<div class='run-panel-label' style='margin-bottom:0.6rem;'>"
-                    "Program Inputs"
-                    "</div>",
-                    unsafe_allow_html=True
-                )
-                for fi, pi, prompt_txt, wk in all_prompts:
-                    # Strip trailing colon/space for the label
-                    label = prompt_txt.rstrip(": ").strip() or f"Value {pi+1}"
-                    # Show filename prefix if there are multiple files
-                    full_label = (
-                        f"{os.path.basename(py_files[fi])} › {label}"
-                        if len(py_files) > 1 else label
-                    )
-                    if wk not in st.session_state:
-                        st.session_state[wk] = ""
-                    st.text_input(
-                        full_label,
-                        key=wk,
-                        placeholder="Enter value…",
-                    )
-
-            # ── Run button ───────────────────────────────────────────
-            run_col, _ = st.columns([1, 5])
-            with run_col:
-                run_clicked = st.button(
-                    "▶  Run",
-                    key=f"run_{meta['key']}",
-                    type="primary",
-                    use_container_width=True,
-                )
-
-            if run_clicked:
-                # Build per-file stdin strings from the individual widgets
-                file_stdins = [""] * len(py_files)
-                for fi, pi, prompt_txt, wk in all_prompts:
-                    val = st.session_state.get(wk, "")
-                    file_stdins[fi] += val + "\n"
-
-                with st.spinner(f"Running {meta['name']}…"):
-                    run_results = []
-                    for fi, path in enumerate(py_files):
-                        try:
-                            stdout, stderr, imgs = run_script(
-                                path,
-                                stdin_input=file_stdins[fi] if all_prompts else ""
-                            )
-                        except Exception as e:
-                            stdout, stderr, imgs = "", str(e), []
-                        run_results.append({
-                            "file": os.path.basename(path),
-                            "stdout": stdout,
-                            "stderr": stderr,
-                            "imgs": imgs,
-                        })
-                    st.session_state[ck] = run_results
-                    results = run_results
-                st.success("Done!")
-
-            # ── Display results ──────────────────────────────────────
-            if results:
-                for i, path in enumerate(py_files):
-                    fname = os.path.basename(path)
-                    if i < len(results):
-                        r = results[i]
-                        st.markdown(
-                            f"<div class='file-label' style='padding-left:0;border-top:none;'>&#9654; {fname}</div>",
-                            unsafe_allow_html=True
-                        )
-                        if r["stdout"]:
-                            st.code(r["stdout"], language="")
-                        for img_path in r["imgs"]:
-                            if os.path.exists(img_path):
-                                col1, col2, col3 = st.columns([1, 5, 1])
-                                with col2:
-                                    st.image(img_path, use_container_width=True)
-                        if r["stderr"] and not r["stdout"] and not r["imgs"]:
-                            st.error(r["stderr"])
-            else:
-                st.info("Click **▶ Run** above to execute the experiment.")
-        else:
-            st.warning(f"No Python files found in `{meta['key']}/`.")
-
-    with tabs[4]:
-        st.markdown(f"""
-        <div class="section-label" style="margin-top:0.3rem;">Conclusion</div>
-        <p class="conclusion-text">{meta['conclusion']}</p>
-        """, unsafe_allow_html=True)
-
-    st.markdown("<div style='margin-bottom:2.5rem;'></div>", unsafe_allow_html=True)
+    st.markdown(f"""
+<div style="border:1px solid #c8c2b8; border-top:none; border-radius:0 0 3px 3px;
+        background:#f4f0ea; padding:1.1rem 1.6rem 1.2rem; margin-top:0; margin-bottom:3.5rem;">
+    <div class="section-label">Conclusion</div>
+    <p class="conclusion-text">{meta['conclusion']}</p>
+</div>
+""", unsafe_allow_html=True)
 
 st.markdown("""
 <div class="gtc-footer">
-    <span>Deepanghsh Dilkush Naik</span>
-    &nbsp;·&nbsp;
-    <span>24B-CO-017</span>
-    &nbsp;·&nbsp;
-    <span>B.E. Computer Engineering &nbsp;·&nbsp; Semester IV</span>
-    &nbsp;·&nbsp;
-    <span>Goa College of Engineering</span>
+    Deepanghsh Dilkush Naik &nbsp;|&nbsp; 24B-CO-017 &nbsp;|&nbsp; Semester 4
 </div>
 """, unsafe_allow_html=True)
