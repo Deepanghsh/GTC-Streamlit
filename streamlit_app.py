@@ -29,7 +29,7 @@ html, body, [class*="css"] {
 }
 .main .block-container {
     max-width: 1020px;
-    padding-top: 1.5rem;
+    padding-top: 5rem;
     padding-bottom: 3rem;
     background-color: #f0ede8;
 }
@@ -45,9 +45,11 @@ html, body, [class*="css"] {
     background: #faf8f5;
     border-radius: 2px;
     box-shadow: 0 2px 8px rgba(0,0,0,0.07);
-    position: sticky;
+    position: fixed;
     top: 0;
-    z-index: 999;
+    left: 0;
+    right: 0;
+    z-index: 99999;
 }
 .college-header .ch-logo {
     flex-shrink: 0;
