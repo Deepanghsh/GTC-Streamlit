@@ -41,16 +41,16 @@ html, body, [class*="css"] {
     padding: 0.55rem 1.6rem;
     border: 1px solid #c8c2b8;
     border-top: 3px solid #1a1a1a;
+    border-left: none;
     margin-bottom: 1.8rem;
     background: #faf8f5;
-    border-radius: 2px;
+    border-radius: 0 2px 2px 0;
     box-shadow: 0 2px 8px rgba(0,0,0,0.07);
     position: fixed;
     top: 0;
-    left: 0;
+    left: 3.5rem;    /* ← leave room for the Streamlit >> sidebar toggle button */
     right: 0;
     z-index: 99999;
-    /* Let clicks pass through to the Streamlit >> toggle button beneath */
     pointer-events: none;
 }
 .college-header img,
